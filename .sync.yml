@@ -2,8 +2,8 @@
   checkoutTestApplications: true
   env:
     - DOCKER_IMAGE: adorsys/nginx
-      TAG: 8-ubi
-      DIR: ubi
+      TAG: centos
+      DIR: centos
       SQUASH: 'true'
       ALIASES: 'latest'
     - DOCKER_IMAGE: adorsys/nginx
