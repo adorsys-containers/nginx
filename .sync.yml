@@ -1,0 +1,16 @@
+.github/workflows/ci.yaml:
+  checkoutTestApplications: true
+  env:
+    - DOCKER_IMAGE: adorsys/nginx
+      TAG: 8-ubi
+      DIR: ubi
+      SQUASH: 'true'
+      ALIASES: 'latest'
+    - DOCKER_IMAGE: adorsys/nginx
+      TAG: alpine
+      DIR: alpine
+      SQUASH: 'true'
+    - DOCKER_IMAGE: adorsys/nginx
+      TAG: ubi
+      DIR: ubi
+      SQUASH: 'true'
