@@ -21,10 +21,10 @@ jobs:
         env:
           -
             ALIASES: 'latest'
-            DIR: 'ubi'
+            DIR: 'centos'
             DOCKER_IMAGE: 'adorsys/nginx'
             SQUASH: 'true'
-            TAG: '8-ubi'
+            TAG: 'centos'
           -
             DIR: 'alpine'
             DOCKER_IMAGE: 'adorsys/nginx'
