@@ -76,12 +76,11 @@ jobs:
       - name: Run tests
         env: ${{ matrix.env }}
         run: |
-          bash -xe "tests/tests.sh"
-          npx dockerfilelint < "Dockerfile"
+          bash -xe "${{ matrix.env.DIR }}/tests/tests.sh"
+          npx dockerfilelint < "${{ matrix.env.DIR }}/Dockerfile"
 
-          find . -name '*.sh' -print0 | xargs -0 shellcheck
-          grep -lr '#!/bin/sh' . | xargs --no-run-if-empty shellcheck
-        working-directory: ${{ matrix.env.DIR }}
+          find "${{ matrix.env.DIR }}/" -name '*.sh' -print0 | xargs -0 shellcheck
+          grep -lr '#!/bin/sh' "${{ matrix.env.DIR }}/" | xargs --no-run-if-empty shellcheck
 
       - name: Squash Docker Image
         if: matrix.env.SQUASH
