@@ -48,6 +48,7 @@ RUN microdnf update -y && microdnf clean all && rm -rf /var/cache/yum \
     && sed -ri '/location \//,/.*\}/d' /etc/nginx/nginx.conf \
     && grep access_log /etc/nginx/nginx.conf > /etc/nginx/conf.d/logging.conf \
     && sed -i '/access_log/d' /etc/nginx/nginx.conf \
+    && sed -i '/error_page/,+2d' /etc/nginx/nginx.conf \
     && chown -R 1001:0 /etc/nginx/conf.d/logging.conf \
     && chmod -R g=u /etc/nginx/conf.d/logging.conf \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
