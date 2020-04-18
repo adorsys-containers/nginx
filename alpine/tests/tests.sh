@@ -2,6 +2,8 @@
 
 set -euo pipefail
 
+trap 'if docker inspect nginx > /dev/null 2>&1; then docker logs nginx; docker rm -f nginx; fi' INT TERM EXIT
+
 docker run --rm "${DOCKER_IMAGE}:${TAG}" nginx -V
 docker run --rm "${DOCKER_IMAGE}:${TAG}" nginx -t
 docker run -eNGINX_DISABLE_ACCESS_LOG=true --rm "${DOCKER_IMAGE}:${TAG}" nginx -t
@@ -15,7 +17,7 @@ docker run --rm -v "$(git rev-parse --show-toplevel)/test-applications/docker-en
 
 # Test starting nginx
 docker run --rm --name nginx -u 1000090000:0 -d -p8080:8080 -v "$(git rev-parse --show-toplevel)/test-applications/nginx/index.html":/usr/share/nginx/html/index.html "${DOCKER_IMAGE}:${TAG}"
-docker logs nginx
+sleep 2
 
 curl -sSf localhost:8080 | grep OK
 docker logs nginx | grep "GET / HTTP"
