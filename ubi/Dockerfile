@@ -29,10 +29,6 @@ COPY --from=TZDATA /usr/share/zoneinfo/Europe/Berlin /usr/share/zoneinfo/Europe/
 
 WORKDIR /usr/share/nginx/html
 
-# Workaround for
-# https://github.com/rpm-software-management/microdnf/issues/50
-RUN mkdir -p /run/user/$(id -u)
-
 # https://github.com/nginxinc/docker-nginx-unprivileged/blob/master/mainline/stretch/Dockerfile
 RUN microdnf update -y && microdnf clean all && rm -rf /var/cache/yum \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
