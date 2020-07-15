@@ -5,7 +5,6 @@
       TAG: centos
       DIR: centos
       SQUASH: 'true'
-      ALIASES: 'latest'
     - DOCKER_IMAGE: adorsys/nginx
       TAG: alpine
       DIR: alpine
@@ -14,3 +13,4 @@
       TAG: ubi
       DIR: ubi
       SQUASH: 'true'
+      ALIASES: 'latest'

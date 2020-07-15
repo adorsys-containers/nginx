@@ -32,10 +32,8 @@ WORKDIR /usr/share/nginx/html
 # https://github.com/nginxinc/docker-nginx-unprivileged/blob/master/mainline/stretch/Dockerfile
 RUN microdnf update -y && microdnf clean all && rm -rf /var/cache/yum \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    && microdnf install --nodocs -y nginx && microdnf clean all \
+    && microdnf install --nodocs -y nginx gettext && microdnf clean all \
     && mkdir -p /var/cache/nginx \
-    && chown -R 1001:0 /var/cache/nginx /usr/share/nginx/html \
-    && chmod -R g=u /var/cache/nginx /usr/share/nginx/html /etc/passwd \
     && rm -rf /usr/share/nginx/html/* \
     && sed -i -e '/listen/!b' -e '/80 default_server;/!b' -e 's/80 default_server;/8080;/' /etc/nginx/nginx.conf \
     && sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \
@@ -45,8 +43,8 @@ RUN microdnf update -y && microdnf clean all && rm -rf /var/cache/yum \
     && grep access_log /etc/nginx/nginx.conf > /etc/nginx/conf.d/logging.conf \
     && sed -i '/access_log/d' /etc/nginx/nginx.conf \
     && sed -i '/error_page/,+2d' /etc/nginx/nginx.conf \
-    && chown -R 1001:0 /etc/nginx/conf.d/logging.conf \
-    && chmod -R g=u /etc/nginx/conf.d/logging.conf \
+    && chown -R 1001:0 /var/cache/nginx /usr/share/nginx/html /etc/nginx/conf.d \
+    && chmod -R g=u /var/cache/nginx /usr/share/nginx/html /etc/passwd /etc/nginx/conf.d/ \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 

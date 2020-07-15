@@ -27,10 +27,10 @@ COPY root /
 # https://github.com/nginxinc/docker-nginx-unprivileged/blob/master/mainline/stretch/Dockerfile
 RUN apk --no-cache upgrade \
     && mkdir -p /var/cache/nginx /etc/nginx/conf.default.d/ /etc/nginx/default.d/ \
-    && chown -R 1001:0 /var/cache/nginx /usr/share/nginx/html \
+    && chown -R 1001:0 /var/cache/nginx /usr/share/nginx/html /etc/nginx/conf.d/default.conf \
     && chmod -R g=u /var/cache/nginx /usr/share/nginx/html /etc/passwd \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    && rm -rf /usr/share/nginx/html/* \
+    && rm -rf /usr/share/nginx/html/* /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh \
     && sed -i -e '/listen/!b' -e '/80;/!b' -e 's/80;/8080;/' /etc/nginx/conf.d/default.conf \
     && sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \
     && sed -i 's!/var/run/nginx.pid!/var/cache/nginx/nginx.pid!g' /etc/nginx/nginx.conf \
@@ -45,7 +45,3 @@ RUN apk --no-cache upgrade \
     && chmod -R g=u /etc/nginx/conf.d/logging.conf
 
 USER 1001
-
-ENTRYPOINT ["/docker-entrypoint.sh"]
-
-CMD ["nginx", "-g", "daemon off;"]
