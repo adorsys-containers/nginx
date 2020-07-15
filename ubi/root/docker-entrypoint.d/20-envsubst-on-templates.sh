@@ -2,7 +2,7 @@
 
 set -e
 
-ME=$(basename $0)
+ME=$(basename "$0")
 
 auto_envsubst() {
   local template_dir="${NGINX_ENVSUBST_TEMPLATE_DIR:-/etc/nginx/templates}"
@@ -10,7 +10,8 @@ auto_envsubst() {
   local output_dir="${NGINX_ENVSUBST_OUTPUT_DIR:-/etc/nginx/conf.d}"
 
   local template defined_envs relative_path output_path subdir
-  defined_envs=$(printf '${%s} ' $(env | cut -d= -f1))
+  # shellcheck disable=SC2016
+  defined_envs=$(printf '${%s} ' "$(env | cut -d= -f1)")
   [ -d "$template_dir" ] || return 0
   if [ ! -w "$output_dir" ]; then
     echo "$ME: ERROR: $template_dir exists, but $output_dir is not writable"

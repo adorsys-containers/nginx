@@ -20,7 +20,6 @@ jobs:
       matrix:
         env:
           -
-            ALIASES: 'latest'
             DIR: 'centos'
             DOCKER_IMAGE: 'adorsys/nginx'
             SQUASH: 'true'
@@ -31,6 +30,7 @@ jobs:
             SQUASH: 'true'
             TAG: 'alpine'
           -
+            ALIASES: 'latest'
             DIR: 'ubi'
             DOCKER_IMAGE: 'adorsys/nginx'
             SQUASH: 'true'
@@ -141,7 +141,7 @@ jobs:
             done;
             (exit $s)
           fi
-      
+
       - name: Slack notification if pipeline failed
         uses: 8398a7/action-slack@v3
         with:
