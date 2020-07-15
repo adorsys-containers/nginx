@@ -18,7 +18,7 @@ EXPOSE 8080
 
 USER 0
 
-ENV TZ=Europe/Berlin
+ENV TZ=Europe/Berlin NGINX_ENTRYPOINT_QUIET_LOGS=true
 
 WORKDIR /usr/share/nginx/html
 
