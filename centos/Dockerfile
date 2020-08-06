@@ -1,4 +1,4 @@
-FROM centos/nginx-114-centos7:latest
+FROM centos/nginx-116-centos7:latest
 
 LABEL maintainer="adorsys GmbH & Co. KG" \
       vendor="adorsys GmbH & Co. KG" \
