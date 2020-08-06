@@ -59,7 +59,7 @@ The current directory points to the web http root directory.
 
 | Name | Description | Size |
 | ---- | ----------- | ---- |
-| centos | Based on [RH SCL nginx](https://github.com/sclorg/nginx-container) 1.14 | ![](https://images.microbadger.com/badges/image/adorsys/nginx.svg) |
+| centos | Based on [RH SCL nginx](https://github.com/sclorg/nginx-container) 1.16 | ![](https://images.microbadger.com/badges/image/adorsys/nginx.svg) |
 | alpine | Based on [`nginx:alpine`](https://hub.docker.com/_/nginx) | ![](https://images.microbadger.com/badges/image/adorsys/nginx:alpine.svg) |
 | ubi | Based on [RHEL8 UBI](https://developers.redhat.com/blog/2019/05/31/working-with-red-hat-enterprise-linux-universal-base-images-ubi/) | ![](https://images.microbadger.com/badges/image/adorsys/nginx:ubi.svg) |
-| latest | Based on [RHEL8 UBI](https://developers.redhat.com/blog/2019/05/31/working-with-red-hat-enterprise-linux-universal-base-images-ubi/) | ![](https://images.microbadger.com/badges/image/adorsys/nginx:ubi.svg) |
+| latest | Alias for `ubi`| ![](https://images.microbadger.com/badges/image/adorsys/nginx:latest.svg) |
