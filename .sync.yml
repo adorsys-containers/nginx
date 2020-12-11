@@ -1,5 +1,4 @@
 .github/workflows/ci.yaml:
-  checkoutTestApplications: true
   env:
     - DOCKER_IMAGE: adorsys/nginx
       TAG: centos
