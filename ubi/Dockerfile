@@ -16,6 +16,8 @@ LABEL maintainer="adorsys GmbH & Co. KG" \
       org.label-schema.license="" \
       org.label-schema.build-date=""
 
+ARG NGINX_STREAM=1.18
+
 EXPOSE 8080
 
 USER 0
@@ -30,16 +32,16 @@ COPY --from=TZDATA /usr/share/zoneinfo/Europe/Berlin /usr/share/zoneinfo/Europe/
 WORKDIR /usr/share/nginx/html
 
 # https://github.com/nginxinc/docker-nginx-unprivileged/blob/master/mainline/stretch/Dockerfile
-RUN microdnf update -y && microdnf clean all && rm -rf /var/cache/yum \
+RUN microdnf --noplugins update -y && microdnf --noplugins clean all && rm -rf /var/cache/yum \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    && microdnf install --nodocs -y nginx gettext && microdnf clean all \
+    && printf '[nginx]\nname=nginx\nstream=%s\nprofiles=\nstate=enabled' "${NGINX_STREAM}" > /etc/dnf/modules.d/nginx.module \
+    && microdnf --noplugins install --nodocs -y nginx gettext && microdnf --noplugins clean all \
     && mkdir -p /var/cache/nginx \
     && rm -rf /usr/share/nginx/html/* \
-    && sed -i -e '/listen/!b' -e '/80 default_server;/!b' -e 's/80 default_server;/8080;/' /etc/nginx/nginx.conf \
+    && sed -i -e '/listen/!b' -e '/80;/!b' -e 's/80;/8080;/' /etc/nginx/nginx.conf \
     && sed -i -e '/user/!b' -e '/nginx/!b' -e '/nginx/d' /etc/nginx/nginx.conf \
     && sed -i 's!/run/nginx.pid!/var/cache/nginx/nginx.pid!g' /etc/nginx/nginx.conf \
     && sed -i "/^http {/a \    proxy_temp_path /var/cache/nginx/proxy_temp;\n    client_body_temp_path /var/cache/nginx/client_temp;\n    fastcgi_temp_path /var/cache/nginx/fastcgi_temp;\n    uwsgi_temp_path /var/cache/nginx/uwsgi_temp;\n    scgi_temp_path /var/cache/nginx/scgi_temp;\n" /etc/nginx/nginx.conf \
-    && sed -ri '/location \//,/.*\}/d' /etc/nginx/nginx.conf \
     && grep access_log /etc/nginx/nginx.conf > /etc/nginx/conf.d/logging.conf \
     && sed -i '/access_log/d' /etc/nginx/nginx.conf \
     && sed -i '/error_page/,+2d' /etc/nginx/nginx.conf \
