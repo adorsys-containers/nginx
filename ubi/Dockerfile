@@ -16,7 +16,7 @@ LABEL maintainer="adorsys GmbH & Co. KG" \
       org.label-schema.license="" \
       org.label-schema.build-date=""
 
-ARG NGINX_STREAM=1.18
+ARG NGINX_STREAM=1.20
 
 EXPOSE 8080
 
@@ -45,14 +45,14 @@ RUN microdnf --noplugins update -y && microdnf --noplugins clean all && rm -rf /
     && grep access_log /etc/nginx/nginx.conf > /etc/nginx/conf.d/logging.conf \
     && sed -i '/access_log/d' /etc/nginx/nginx.conf \
     && sed -i '/error_page/,+2d' /etc/nginx/nginx.conf \
-    && chown -R 1001:0 /var/cache/nginx /usr/share/nginx/html /etc/nginx/conf.d \
+    && chown -R 999:0 /var/cache/nginx /usr/share/nginx/html /etc/nginx/conf.d \
     && chmod -R g=u /var/cache/nginx /usr/share/nginx/html /etc/passwd /etc/nginx/conf.d/ \
     && ln -sf /dev/stdout /var/log/nginx/access.log \
     && ln -sf /dev/stderr /var/log/nginx/error.log
 
 COPY root /
 
-USER 1001
+USER 999
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
