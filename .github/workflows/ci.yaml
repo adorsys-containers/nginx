@@ -20,16 +20,6 @@ jobs:
       matrix:
         env:
           -
-            DIR: 'centos'
-            DOCKER_IMAGE: 'adorsys/nginx'
-            SQUASH: 'true'
-            TAG: 'centos'
-          -
-            DIR: 'alpine'
-            DOCKER_IMAGE: 'adorsys/nginx'
-            SQUASH: 'true'
-            TAG: 'alpine'
-          -
             ALIASES: 'latest'
             DIR: 'ubi'
             DOCKER_IMAGE: 'adorsys/nginx'

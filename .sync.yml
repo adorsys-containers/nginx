@@ -1,14 +1,6 @@
 .github/workflows/ci.yaml:
   env:
     - DOCKER_IMAGE: adorsys/nginx
-      TAG: centos
-      DIR: centos
-      SQUASH: 'true'
-    - DOCKER_IMAGE: adorsys/nginx
-      TAG: alpine
-      DIR: alpine
-      SQUASH: 'true'
-    - DOCKER_IMAGE: adorsys/nginx
       TAG: ubi
       DIR: ubi
       SQUASH: 'true'
